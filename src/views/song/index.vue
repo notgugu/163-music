@@ -7,8 +7,8 @@
           <i class="img-bg" :style="{ 'animation-play-state': song.isPlay ? 'running' : 'paused' }"></i>
           <div class="img" :style="{ 'animation-play-state': song.isPlay ? 'running' : 'paused' }">
             <img :src="song.picUrl" alt="">
-            <i class="status" v-show="!song.isPlay"></i>
           </div>
+          <i class="status" v-show="!song.isPlay"></i>
         </div>
 
         <div class="lyric" :style="{ height: screen.lyricHeight + 'px' }">
@@ -354,6 +354,7 @@ export default {
       margin: -50px 0 0 -50px;
       width: 100px;
       height: 100px;
+      z-index: 9;
       background: url('~@/assets/img/play-icon.png') no-repeat 0 0 / 100% 100%;
     }
   }
