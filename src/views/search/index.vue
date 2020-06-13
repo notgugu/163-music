@@ -77,6 +77,24 @@ export default {
     };
   },
   methods: {
+    colorChange(valueArr,arrObj,changeArr){//封装了颜色变换函数，减少了getKeyword函数中代码的复用，减少了代码的冗余
+      for(let i of arrObj){
+        let num = 0;
+        for(let j of valueArr){
+          if(i == j){
+            changeArr.name += `<span style="color: #507daf;">${i}</span>`;
+            break;
+          }
+          else{
+            num++;
+            if(num == valueArr.length){
+              changeArr.name += `<span>${i}</span>`;
+              break;
+            }
+          }
+        }
+      }
+    },
     getKeyword(){//关键字变色
       let valueArr = this.value.split('');
       valueArr = valueArr.filter((item)=> item != ' ');
@@ -87,7 +105,7 @@ export default {
       this.searchAlbumData.artist.name = '';
       this.searchArtistData.name = '';
       let num = 0;
-      for(let i of albumArr){//对专辑进行处理
+      /*for(let i of albumArr){//对专辑进行处理
         num = 0;
         for(let j of valueArr){
           if(i == j){
@@ -102,8 +120,9 @@ export default {
             }
           }
         }
-      }
-      for(let i of albumArtistArr){//对专辑作者进行处理
+      }*/
+      this.colorChange(valueArr,albumArr,this.searchAlbumData);
+      /*for(let i of albumArtistArr){//对专辑作者进行处理
         num = 0;
         for(let j of valueArr){
           if(i == j){
@@ -118,8 +137,9 @@ export default {
             }
           }
         }
-      }
-      for(let i of artistArr){//对歌手进行处理
+      }*/
+      this.colorChange(valueArr,albumArtistArr,this.searchAlbumData.artist);
+      /*for(let i of artistArr){//对歌手进行处理
         num = 0;
         for(let j of valueArr){
           if(i == j){
@@ -134,16 +154,16 @@ export default {
             }
           }
         }
-      }
+      }*/
+      this.colorChange(valueArr,artistArr,this.searchArtistData);
       if(this.oldSongsData == this.searchSongsData && this.isFirstReq == false){//如果是上拉刷新并且数据没有更新时跳出
         return;
       };
       for(let song of this.searchSongsData){//对歌曲进行处理
         let songName = song.name.split('');
         this.songsData = this.songsData.concat(song);
-        console.log(this.songsData[this.index],this.index);
         this.songsData[this.index].name = '';
-        for(let i of songName){
+        /*for(let i of songName){
           num = 0;
           for(let j of valueArr){
             if(i == j){
@@ -158,10 +178,11 @@ export default {
               }
             }
           }
-        }
+        }*/
+        this.colorChange(valueArr,songName,this.songsData[this.index]);
         let songArName = song.artists[0].name.split('');
         this.songsData[this.index].artists[0].name = '';
-        for(let i of songArName){
+        /*for(let i of songArName){
           num = 0;
           for(let j of valueArr){
             if(i == j){
@@ -176,10 +197,11 @@ export default {
               }
             }
           }
-        }
+        }*/
+        this.colorChange(valueArr,songArName,this.songsData[this.index].artists[0]);
         let songAlName = song.album.name.split('');
         this.songsData[this.index].album.name = '';
-        for(let i of songAlName){
+        /*for(let i of songAlName){
           num = 0;
           for(let j of valueArr){
             if(i == j){
@@ -194,7 +216,8 @@ export default {
               }
             }
           }
-        }
+        }*/
+        this.colorChange(valueArr,songAlName,this.songsData[this.index].album);
         this.index++;
       }
     },
