@@ -10,3 +10,4 @@ a{color:$color_link;  text-decoration:none; &:hover{color:$color_link; text-deco
   &:after{clear:both;}
 }
 body{ font-family:"微软雅黑"; color: $color;}
+body,html{ height: 100%}

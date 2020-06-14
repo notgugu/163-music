@@ -231,7 +231,7 @@ export default {
   },
   watch: {
     isPlay(newval,oldval){
-      if(newval){
+      if(newval && this.IsEnded == false){
         this.$refs.audioNode.play();
       }
       else{
@@ -256,7 +256,6 @@ export default {
   to {transform: rotate(360deg);}
 }
 /deep/.player{
-  height: 100%;
   &>.player-icon{
     position: fixed;
     right: 0;
