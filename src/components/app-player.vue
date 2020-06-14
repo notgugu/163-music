@@ -12,13 +12,11 @@
         <ul>
           <li v-for="(item,index) in songList" :key="index" @click="$router.replace(`/song/${item.id}`)" :style="{'background': item.id == songStore.id ? '#f2f2f2': ''}">
             <div class="content">
-                <img :src="item.al.picUrl" alt="">
                 <div class="text">
-                  <div class="text-name">{{item.name}}</div>
-                  <div class="text-singer">{{item.ar[0].name}}</div>
+                  <div class="text-name">{{item.name}} {{item.ar[0].name}}</div>
                 </div>
             </div>
-            <i class="fa fa-play-circle-o"></i>
+            <i class="fa fa-close" @click.stop="deleteSong(item.id)"></i>
           </li>
         </ul>
       </div>
@@ -40,16 +38,6 @@ export default {
     return {
       isShowControl: false,
       isShowList: false,
-      song: {
-        id: null,
-        isPlay: true,//是否在播放
-        name: '',//歌名
-        url: null,
-        picUrl: '',//图片
-        pic_str: '',
-        lyric: [],//{ time: 0, content: '歌词' }
-        activeIndex: 0,//歌词激活位置
-      },
       songList:[],
       IsEnded: false,
     }
@@ -114,6 +102,18 @@ export default {
         await this.getSongUrl();
         this.$store.commit('updateSong', this.song);
       };
+    },
+    deleteSong(id){//列表中删除歌曲
+      if(id == this.songStore.id){
+        this.playSong(1);
+      }
+      let chooseIndex = null;
+      this.allSongs.forEach((item,index) =>{
+        if(item == id){
+          chooseIndex = index;
+        }
+      })
+      this.$store.commit('deleteAllSongs',chooseIndex);
     },
     getSongUrl(){//歌url接口
       return new Promise((resolve,reject) =>{
@@ -256,7 +256,7 @@ export default {
   to {transform: rotate(360deg);}
 }
 /deep/.player{
-
+  height: 100%;
   &>.player-icon{
     position: fixed;
     right: 0;
@@ -307,7 +307,11 @@ export default {
       font-size: 72px;/*px*/
     }
     &>.songList{
+      background: #f9f9f9;
       margin-top: 30px;
+      height: 600px;
+      overflow: hidden;
+      overflow-y: auto;
       li{
         padding-left: 20px;
         height: 120px;
@@ -327,17 +331,6 @@ export default {
               font-size: 29px;/*px*/
               line-height: 44px;/*px*/
               color: #000;
-            }
-            &>.text-singer{
-              font-size: 24px;/*px*/
-              line-height: 32px;/*px*/
-              color: #000;
-            }
-            &>.fa-play-circle-o{
-              display: flex;
-              align-items: center;
-              font-size: 50px;/*px*/
-              color: #766c62;
             }
           }
         }

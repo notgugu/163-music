@@ -28,6 +28,9 @@ var store = new Vuex.Store({
     updateAllSongs(state,payload){//更新所有歌
       state.allSongs = [...new Set(state.allSongs.concat(payload))];//数组拼接去重
     },
+    deleteAllSongs(state,payload){
+      state.allSongs.splice(payload,1);
+    }
   },
   actions: {//异步处理
     
