@@ -106,7 +106,10 @@ export default {
     deleteSong(id){//列表中删除歌曲
       if(id == this.songStore.id){
         this.playSong(1);
-      }
+      };
+      if(this.allSongs.length <= 1){
+        return;
+      };
       let chooseIndex = null;
       this.allSongs.forEach((item,index) =>{
         if(item == id){
