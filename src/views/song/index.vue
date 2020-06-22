@@ -269,6 +269,7 @@ export default {
       this.transitionDuration();
     },
     ['$route'](newval,oldval){//路由信息对象发生变化时触发
+      if(newval.params.id == "") return;
       this.init();
     },
   },
@@ -478,5 +479,4 @@ export default {
     }
   }
 }
-
 </style>

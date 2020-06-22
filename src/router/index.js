@@ -15,7 +15,10 @@ export default new Router({
     {
       path: '/',
       name: 'recommendation Index',
-      component: recommendationIndex
+      component: recommendationIndex,
+      meta: {
+        isKeepAlive: true
+      },    
     },
     {
       path: '/song/:id',
@@ -43,5 +46,12 @@ export default new Router({
       component: artistIndex,
     },
 
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })

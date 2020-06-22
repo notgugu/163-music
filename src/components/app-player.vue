@@ -13,7 +13,7 @@
           <li v-for="(item,index) in songList" :key="index" @click="$router.replace(`/song/${item.id}`)" :style="{'background': item.id == songStore.id ? '#f2f2f2': ''}">
             <div class="content">
                 <div class="text">
-                  <div class="text-name">{{item.name}} {{item.ar[0].name}}</div>
+                  <div class="text-name">{{item.name}} - {{item.ar[0].name}}</div>
                 </div>
             </div>
             <i class="fa fa-close" @click.stop="deleteSong(item.id)"></i>
@@ -311,7 +311,7 @@ export default {
     &>.songList{
       background: #f9f9f9;
       margin-top: 30px;
-      height: 600px;
+      height: 76%;
       overflow: hidden;
       overflow-y: auto;
       li{

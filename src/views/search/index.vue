@@ -78,146 +78,25 @@ export default {
   },
   methods: {
     colorChange(valueArr,arrObj,changeArr){//封装了颜色变换函数，减少了getKeyword函数中代码的复用，减少了代码的冗余
-      for(let i of arrObj){
-        let num = 0;
-        for(let j of valueArr){
-          if(i == j){
-            changeArr.name += `<span style="color: #507daf;">${i}</span>`;
-            break;
-          }
-          else{
-            num++;
-            if(num == valueArr.length){
-              changeArr.name += `<span>${i}</span>`;
-              break;
-            }
-          }
-        }
+      if(valueArr == arrObj){
+        changeArr.name = `<span style="color: #507daf;">${arrObj}</span>`;
+      }
+      else{
+        changeArr.name = `<span>${arrObj}</span>`;
       }
     },
-    getKeyword(){//关键字变色
-      let valueArr = this.value.split('');
-      valueArr = valueArr.filter((item)=> item != ' ');
-      let albumArr = this.searchAlbumData.name.split('');
-      let albumArtistArr =  this.searchAlbumData.artist.name.split('');
-      let artistArr = this.searchArtistData.name.split('');
-      this.searchAlbumData.name = '';
-      this.searchAlbumData.artist.name = '';
-      this.searchArtistData.name = '';
-      let num = 0;
-      /*for(let i of albumArr){//对专辑进行处理
-        num = 0;
-        for(let j of valueArr){
-          if(i == j){
-            this.searchAlbumData.name += `<span style="color: #507daf;">${i}</span>`;
-            break;
-          }
-          else{
-            num++;
-            if(num == valueArr.length){
-              this.searchAlbumData.name += `<span>${i}</span>`;
-              break;
-            }
-          }
-        }
-      }*/
-      this.colorChange(valueArr,albumArr,this.searchAlbumData);
-      /*for(let i of albumArtistArr){//对专辑作者进行处理
-        num = 0;
-        for(let j of valueArr){
-          if(i == j){
-            this.searchAlbumData.artist.name += `<span style="color: #507daf;">${i}</span>`;
-            break;
-          }
-          else{
-            num++;
-            if(num == valueArr.length){
-              this.searchAlbumData.artist.name += `<span>${i}</span>`;
-              break;
-            }
-          }
-        }
-      }*/
-      this.colorChange(valueArr,albumArtistArr,this.searchAlbumData.artist);
-      /*for(let i of artistArr){//对歌手进行处理
-        num = 0;
-        for(let j of valueArr){
-          if(i == j){
-            this.searchArtistData.name += `<span style="color: #507daf;">${i}</span>`;
-            break;
-          }
-          else{
-            num++;
-            if(num == valueArr.length){
-              this.searchArtistData.name += `<span>${i}</span>`;
-              break;
-            }
-          }
-        }
-      }*/
-      this.colorChange(valueArr,artistArr,this.searchArtistData);
+    getKeyword(){//关键词变色
+      this.colorChange(this.value,this.searchAlbumData.name,this.searchAlbumData);
+      this.colorChange(this.value,this.searchAlbumData.artist.name,this.searchAlbumData.artist);
+      this.colorChange(this.value,this.searchArtistData.name,this.searchArtistData);
       if(this.oldSongsData == this.searchSongsData && this.isFirstReq == false){//如果是上拉刷新并且数据没有更新时跳出
         return;
       };
       for(let song of this.searchSongsData){//对歌曲进行处理
-        let songName = song.name.split('');
         this.songsData = this.songsData.concat(song);
-        this.songsData[this.index].name = '';
-        /*for(let i of songName){
-          num = 0;
-          for(let j of valueArr){
-            if(i == j){
-              this.songsData[this.index].name += `<span style="color: #507daf;">${i}</span>`;
-              break;
-            }
-            else{
-              num++;
-              if(num == valueArr.length){
-                this.songsData[this.index].name += `<span>${i}</span>`;
-                break;
-              }
-            }
-          }
-        }*/
-        this.colorChange(valueArr,songName,this.songsData[this.index]);
-        let songArName = song.artists[0].name.split('');
-        this.songsData[this.index].artists[0].name = '';
-        /*for(let i of songArName){
-          num = 0;
-          for(let j of valueArr){
-            if(i == j){
-              this.songsData[this.index].artists[0].name += `<span style="color: #507daf;">${i}</span>`;
-              break;
-            }
-            else{
-              num++;
-              if(num == valueArr.length){
-                this.songsData[this.index].artists[0].name += `<span>${i}</span>`;
-                break;
-              }
-            }
-          }
-        }*/
-        this.colorChange(valueArr,songArName,this.songsData[this.index].artists[0]);
-        let songAlName = song.album.name.split('');
-        this.songsData[this.index].album.name = '';
-        /*for(let i of songAlName){
-          num = 0;
-          for(let j of valueArr){
-            if(i == j){
-              this.songsData[this.index].album.name += `<span style="color: #507daf;">${i}</span>`;
-              break;
-            }
-            else{
-              num++;
-              if(num == valueArr.length){
-                this.songsData[this.index].album.name += `<span>${i}</span>`;
-                break;
-              }
-            }
-          }
-        }*/
-        this.colorChange(valueArr,songAlName,this.songsData[this.index].album);
+        this.colorChange(this.value,song.name,this.songsData[this.index]);
+        this.colorChange(this.value,song.artists[0].name,this.songsData[this.index].artists[0]);
+        this.colorChange(this.value,song.album.name,this.songsData[this.index].album);
         this.index++;
       }
     },
@@ -234,7 +113,6 @@ export default {
         if(data.code == 200){
           if(type == 1 && data.result.songs && data.result.songs.length > 0){//获取歌曲
             this.searchSongsData = data.result.songs;
-            console.log(data.result.songs)
             this.total = data.result.songCount;
           }
           else if(type == 10 && data.result.albums && data.result.albums.length > 0){//获取专辑
@@ -287,8 +165,8 @@ export default {
   watch:{
     value(newval){//监听搜索内容的变化
       if(newval == '') return;
-      this.index = 0;
       this.songsData = [];
+      this.index = 0;
       this.getSearch(newval,1);
       this.getSearch(newval,10);
       this.getSearch(newval,100);

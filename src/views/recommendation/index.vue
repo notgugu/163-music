@@ -26,7 +26,7 @@
           <i class="fa fa-play-circle-o"></i>
         </router-link>
       </li>
-    </ul>
+    </ul>   
   </div>
 </template>
 
@@ -44,6 +44,7 @@ export default {
     return {
       imgTextData: [],//推荐歌单的数据
       newSongData: [],//新音乐数据
+      transitionName: '',
     };
   },
   methods: {
@@ -71,7 +72,10 @@ export default {
   components: {//注册组件
     appNav,
     appTitle,
-  }
+  },
+  computed:{
+
+  },
 }
 </script>
 

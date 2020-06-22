@@ -1,6 +1,6 @@
 <template>
   <div class="song-list">
-    <div class="header" :style="`background:url(${songListData.coverImgUrl != null  ? songListData.coverImgUrl : ''})`">
+    <div class="header" :class="{'all-header': isShowAllIntro}" :style="`background:url(${songListData.coverImgUrl != null  ? songListData.coverImgUrl : ''})`">
       <div class="title">
         {{songListData.name}}
       </div>
@@ -87,6 +87,7 @@ export default {
         console.log(res.data);
         let data = res.data;
         if(data.code == 200){
+          if(this.songListData == data.playlist) return;
           this.songListData = data.playlist;
         }
       })
@@ -101,11 +102,14 @@ export default {
         console.log(res.data)
         let data = res.data;
         if(data.code == 200){
+          if( this.hotCommentsData == data.hotComments) return;
           this.hotCommentsData = data.hotComments;
         }
       })
     },
   },
+  watch: {
+  }
 }
 </script>
 
@@ -270,5 +274,9 @@ export default {
       }
     }
   }
+  .all-header{
+    height: auto;
+  }
 }
+
 </style>
