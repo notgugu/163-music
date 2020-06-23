@@ -150,12 +150,12 @@ export default {
     }
     .introAll{
       position: relative;
-      font-size: 27px;/*px*/
+      font-size: 26px;/*px*/
       color: #fff;
       line-height: 38px;
       margin: 20px 0 33px 30px;
       padding-right: 30px;
-      width: 650px;
+      width: 420px;
       .fa-angle-left{
         position: absolute;
         font-size: 24px;/*px*/
@@ -276,6 +276,7 @@ export default {
   }
   .all-header{
     height: auto;
+    min-height: 420px;
   }
 }
 

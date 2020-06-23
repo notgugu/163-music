@@ -34,6 +34,7 @@
 import appNav from '@/components/app-nav'
 import appTitle from '@/components/app-title'
 import { getPersonalized, getPersonalizedNewsong } from '@/api/recommendation'
+import { Indicator } from 'mint-ui';
 
 export default {
   created(){
@@ -49,6 +50,7 @@ export default {
   },
   methods: {
     getPersonalized(){//得到推荐歌单
+      Indicator.open();
       getPersonalized({
         params: {
           limit: 6
@@ -57,6 +59,7 @@ export default {
         let data = res.data;
         if(data.code == 200){//成功
           this.imgTextData = data.result;
+          Indicator.close();
         }
       });
     },
